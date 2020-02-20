@@ -1,0 +1,12 @@
+#!/bin/sh
+
+OPERATORS="$1"
+FACTS="$2"
+
+sbcl --noinform --noprint --disable-debugger --disable-ldp --lose-on-corruption \
+     --load <<EOF
+(ql:quickload :trivial-satplan)
+(let ((plan (trivial-satplan::smt-plan "$OPERATORS" "$FACTS")))
+  (format t "~&~{~A~%~}" plan))
+(terpri)
+EOF
